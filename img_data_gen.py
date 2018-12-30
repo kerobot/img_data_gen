@@ -1,9 +1,9 @@
 import sys
 import os
+import random
 import pathlib
 import shutil
 import numpy as np
-import matplotlib.pyplot as plt
 import cv2
 import glob
 
@@ -52,6 +52,8 @@ def scratch_image(image, use_flip=True, use_threshold=True, use_filter=True):
 
 RETURN_SUCCESS = 0
 RETURN_FAILURE = -1
+# Test Image Directory
+TEST_IMAGE_PATH = "./test_image"
 # Face Image Directory
 IMAGE_PATH_PATTERN = "./face_image/*"
 # Output Directory
@@ -66,6 +68,16 @@ def main():
     # ディレクトリの作成
     if os.path.isdir(OUTPUT_IMAGE_DIR) == False:
         os.mkdir(OUTPUT_IMAGE_DIR)
+
+    # ディレクトリの作成
+    if os.path.isdir(TEST_IMAGE_PATH) == False:
+        os.mkdir(TEST_IMAGE_PATH)
+
+    # 対象画像のうち2割をテスト用として退避
+    image_files = glob.glob(IMAGE_PATH_PATTERN)
+    random.shuffle(image_files)
+    for i in range(len(image_files)//5):
+        shutil.move(str(image_files[i]), TEST_IMAGE_PATH)
 
     # 画像ファイルの読み込み
     name_images = load_name_images(IMAGE_PATH_PATTERN)
