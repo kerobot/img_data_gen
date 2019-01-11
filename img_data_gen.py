@@ -97,4 +97,4 @@ def main():
     return RETURN_SUCCESS
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()
