@@ -3,9 +3,9 @@ import os
 import random
 import pathlib
 import shutil
-import numpy as np
-import cv2
 import glob
+import cv2
+import numpy as np
 
 def load_name_images(image_path_pattern):
     name_images = []
