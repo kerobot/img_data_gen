@@ -50,6 +50,15 @@ def scratch_image(image, use_flip=True, use_threshold=True, use_filter=True):
         images = doubling_images(func, images)
     return images
 
+def delete_dir(dir_path, is_delete_top_dir=True):
+    for root, dirs, files in os.walk(dir_path, topdown=False):
+        for name in files:
+            os.remove(os.path.join(root, name))
+        for name in dirs:
+            os.rmdir(os.path.join(root, name))
+    if is_delete_top_dir == True:
+        os.rmdir(dir_path)
+
 RETURN_SUCCESS = 0
 RETURN_FAILURE = -1
 # Test Image Directory
@@ -68,10 +77,14 @@ def main():
     # ディレクトリの作成
     if os.path.isdir(OUTPUT_IMAGE_DIR) == False:
         os.mkdir(OUTPUT_IMAGE_DIR)
+    # ディレクトリ内のファイル削除
+    delete_dir(OUTPUT_IMAGE_DIR, False)
 
     # ディレクトリの作成
     if os.path.isdir(TEST_IMAGE_PATH) == False:
         os.mkdir(TEST_IMAGE_PATH)
+    # ディレクトリ内のファイル削除
+    delete_dir(TEST_IMAGE_PATH, False)
 
     # 対象画像のうち2割をテスト用として退避
     image_files = glob.glob(IMAGE_PATH_PATTERN)
