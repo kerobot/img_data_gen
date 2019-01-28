@@ -1,4 +1,3 @@
-import sys
 import os
 import random
 import pathlib
@@ -25,7 +24,7 @@ def load_name_images(image_path_pattern):
         if image is None:
             print(f"画像ファイル[{fullpath}]を読み込めません")
             continue
-        name_images.append((filename,image))
+        name_images.append((filename, image))
     return name_images
 
 def scratch_image(image, use_flip=True, use_threshold=True, use_filter=True):
@@ -56,7 +55,7 @@ def delete_dir(dir_path, is_delete_top_dir=True):
             os.remove(os.path.join(root, name))
         for name in dirs:
             os.rmdir(os.path.join(root, name))
-    if is_delete_top_dir == True:
+    if is_delete_top_dir:
         os.rmdir(dir_path)
 
 RETURN_SUCCESS = 0
@@ -75,13 +74,13 @@ def main():
     print("===================================================================")
 
     # ディレクトリの作成
-    if os.path.isdir(OUTPUT_IMAGE_DIR) == False:
+    if not os.path.isdir(OUTPUT_IMAGE_DIR):
         os.mkdir(OUTPUT_IMAGE_DIR)
     # ディレクトリ内のファイル削除
     delete_dir(OUTPUT_IMAGE_DIR, False)
 
     # ディレクトリの作成
-    if os.path.isdir(TEST_IMAGE_PATH) == False:
+    if not os.path.isdir(TEST_IMAGE_PATH):
         os.mkdir(TEST_IMAGE_PATH)
     # ディレクトリ内のファイル削除
     delete_dir(TEST_IMAGE_PATH, False)
@@ -102,10 +101,10 @@ def main():
         # 画像の水増し
         scratch_face_images = scratch_image(image)
         # 画像の保存
-        for num, im in enumerate(scratch_face_images):
-            output_path = os.path.join(OUTPUT_IMAGE_DIR, f"{filename}_{str(num)}{extension}")
+        for idx, image in enumerate(scratch_face_images):
+            output_path = os.path.join(OUTPUT_IMAGE_DIR, f"{filename}_{str(idx)}{extension}")
             print(f"出力ファイル（絶対パス）:{output_path}")
-            cv2.imwrite(output_path ,im)
+            cv2.imwrite(output_path, image)
 
     return RETURN_SUCCESS
 

@@ -1,7 +1,5 @@
 # img_data_gen
 
-Increasing Image by OpenCV
-
 OpenCVと水増しパターンを利用して画像ファイルを水増しします。
 
 対象となる画像のうち2割程度をテスト用に退避したうえで
